@@ -1,9 +1,9 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Крестики-Нолики · Онлайн</title>
+    <title>Крестики-Нолики</title>
     <style>
         * {
             box-sizing: border-box;
@@ -12,12 +12,12 @@
         }
 
         body {
-            background: #121317;
+            background: #0a0c12;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             margin: 0;
             padding: 16px;
         }
@@ -26,38 +26,37 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            align-items: stretch;
             gap: 16px;
             max-width: 1000px;
             width: 100%;
         }
 
         .game-section {
-            background: #1e2128;
+            background: #181c24;
             border-radius: 28px;
             padding: 20px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
             flex: 2;
-            min-width: 260px;
+            min-width: 270px;
         }
 
         .chat-section {
-            background: #1e2128;
+            background: #181c24;
             border-radius: 28px;
             padding: 20px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
             flex: 1.2;
-            min-width: 240px;
+            min-width: 250px;
             display: flex;
             flex-direction: column;
         }
 
         h2 {
             margin: 0 0 12px 0;
-            font-size: 1.35rem;
+            font-size: 1.3rem;
             font-weight: 500;
-            color: #eef2f8;
-            border-left: 3px solid #6c8eb2;
+            color: #eef2fc;
+            border-left: 3px solid #7c9ec2;
             padding-left: 12px;
         }
 
@@ -65,41 +64,40 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
-            background: #15181f;
+            background: #11141c;
             padding: 12px;
             border-radius: 20px;
-            margin: 16px 0 20px;
+            margin: 14px 0 18px;
         }
 
         .cell {
-            aspect-ratio: 1 / 1;
-            background: #2a2f3a;
+            aspect-ratio: 1;
+            background: #282f3d;
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 500;
             cursor: pointer;
             transition: 0.05s linear;
-            color: #e0e6f0;
+            color: #e6edf6;
             font-family: monospace;
         }
-
-        .cell.X { color: #d99e6b; }
+        .cell.X { color: #e0a06e; }
         .cell.O { color: #7fb38e; }
-        .cell.disabled { cursor: default; opacity: 0.7; }
+        .cell.disabled { cursor: default; opacity: 0.65; pointer-events: none; }
 
         .status-bar {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            gap: 10px;
-            margin-bottom: 16px;
-            background: #15181f;
+            align-items: center;
+            background: #11141c;
             padding: 10px 16px;
             border-radius: 40px;
+            margin-bottom: 14px;
             flex-wrap: wrap;
+            gap: 8px;
         }
 
         .turn-text {
@@ -117,7 +115,7 @@
         }
 
         button {
-            background: #3e4557;
+            background: #3e455a;
             border: none;
             color: #f0f4fc;
             font-weight: 500;
@@ -129,7 +127,7 @@
             font-family: inherit;
             touch-action: manipulation;
         }
-        button:active { background: #5b657e; }
+        button:active { background: #5b6582; }
 
         .action-group {
             display: flex;
@@ -139,7 +137,7 @@
         }
 
         .connection-panel {
-            background: #171b23;
+            background: #11141c;
             border-radius: 20px;
             padding: 14px;
             margin-top: 8px;
@@ -154,12 +152,12 @@
         }
 
         input {
-            background: #0f1118;
-            border: 1px solid #3e4457;
+            background: #0a0c12;
+            border: 1px solid #3a4055;
             padding: 10px 14px;
             border-radius: 40px;
             font-size: 0.85rem;
-            width: 160px;
+            width: 170px;
             color: #f0f4fa;
             font-family: monospace;
         }
@@ -172,14 +170,13 @@
             word-break: break-all;
         }
 
-        /* чат */
         .chat-messages {
             flex: 1;
-            background: #15181f;
+            background: #11141c;
             border-radius: 20px;
             padding: 12px;
-            min-height: 260px;
-            max-height: 300px;
+            min-height: 250px;
+            max-height: 280px;
             overflow-y: auto;
             margin: 10px 0 12px;
             font-size: 0.8rem;
@@ -203,12 +200,12 @@
         }
 
         .message.opponent {
-            background: #2a2f3c;
+            background: #262d3b;
             border-radius: 14px 14px 14px 6px;
         }
 
         .message.mine {
-            background: #3e4a60;
+            background: #3a455f;
             text-align: right;
             border-radius: 14px 14px 6px 14px;
         }
@@ -221,8 +218,8 @@
 
         .chat-input {
             flex: 1;
-            background: #0f1118;
-            border: 1px solid #40465c;
+            background: #0a0c12;
+            border: 1px solid #3a4055;
             border-radius: 40px;
             padding: 10px 14px;
             font-size: 0.8rem;
@@ -230,19 +227,19 @@
         }
 
         .small-btn {
-            background: #3f475a;
+            background: #3a4157;
             padding: 8px 16px;
             font-size: 0.75rem;
         }
 
         @media (max-width: 700px) {
             .app { flex-direction: column; }
-            .chat-messages { min-height: 180px; max-height: 200px; }
+            .chat-messages { min-height: 170px; max-height: 190px; }
             .cell { font-size: 2rem; border-radius: 12px; }
             button { padding: 8px 14px; }
         }
     </style>
-    <script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
 </head>
 <body>
 <div class="app">
@@ -263,25 +260,25 @@
                 <input type="text" id="roomIdInput" placeholder="id комнаты" autocomplete="off">
                 <button id="copyIdBtn" class="small-btn">копировать id</button>
             </div>
-            <div class="room-info" id="roomInfo">готов к игре</div>
+            <div class="room-info" id="roomInfo">создайте комнату или введите id</div>
         </div>
     </div>
 
     <div class="chat-section">
         <h2>чат раунда</h2>
         <div class="chat-messages" id="chatMessages">
-            <div class="message system">чат очистится после партии</div>
+            <div class="message system">чат очищается после партии</div>
         </div>
         <div class="chat-input-area">
             <input type="text" id="chatInput" class="chat-input" placeholder="сообщение..." autocomplete="off">
             <button id="sendChatBtn" class="small-btn">отправить</button>
         </div>
-        <div class="room-info" style="margin-top: 8px;">* сообщения только в текущей игре</div>
+        <div class="room-info" style="margin-top: 8px;">сообщения только для текущей игры</div>
     </div>
 </div>
 
 <script>
-    // ---------- игровая логика ----------
+    // ---------- игровое состояние ----------
     let board = ['', '', '', '', '', '', '', '', ''];
     let currentTurn = 'X';
     let mySymbol = null;
@@ -292,7 +289,7 @@
     // сеть
     let peer = null;
     let activeConn = null;
-    let reconnectAttempt = 0;
+    let connectionRetryTimer = null;
 
     // DOM
     const boardDiv = document.getElementById('board');
@@ -359,6 +356,7 @@
             if (board[i] === 'O') cells[i].classList.add('O');
             const clickable = gameActive && !winner && (currentTurn === mySymbol) && board[i] === '';
             if (!clickable) cells[i].classList.add('disabled');
+            else cells[i].classList.remove('disabled');
         }
         if (!gameActive) turnStatusSpan.innerText = 'нет соединения';
         else if (winner === 'X') turnStatusSpan.innerText = 'победа X';
@@ -412,12 +410,13 @@
         clearChatHistory();
         if (activeConn && activeConn.open) {
             activeConn.send(JSON.stringify({ type: 'RESET' }));
-            setTimeout(() => sendFullSync(), 70);
+            setTimeout(() => sendFullSync(), 80);
         }
     }
 
-    // ----- надёжное соединение для телефонов (с альтернативными серверами) -----
+    // ----- универсальное кросс-платформенное подключение -----
     function destroyPeer() {
+        if (connectionRetryTimer) clearTimeout(connectionRetryTimer);
         if (activeConn) {
             try { activeConn.close(); } catch(e) {}
             activeConn = null;
@@ -428,35 +427,50 @@
         peer = null;
     }
 
-    function createPeerWithFallback(id, onSuccess) {
-        // пробуем разные конфигурации, чтобы на телефонах работало
-        const configs = [
-            { debug: 0, config: { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:stun1.l.google.com:19302' }] } },
-            { debug: 0, config: { iceServers: [{ urls: 'stun:stun.ekiga.net' }, { urls: 'stun:stun.ideasip.com' }] } }
-        ];
-        let attempt = 0;
-        function tryCreate() {
-            const cfg = configs[attempt % configs.length];
-            const p = new Peer(id, cfg);
-            p.on('open', () => {
-                onSuccess(p);
-            });
-            p.on('error', (err) => {
-                if (attempt < configs.length * 2) {
-                    attempt++;
-                    tryCreate();
-                } else {
-                    onSuccess(null);
-                }
-            });
-            return p;
-        }
-        return tryCreate();
+    function createPeerWithGoodConfig(id, onReady) {
+        // оптимизированная конфигурация для всех устройств
+        const config = {
+            debug: 0,
+            config: {
+                iceServers: [
+                    { urls: 'stun:stun.l.google.com:19302' },
+                    { urls: 'stun:stun1.l.google.com:19302' },
+                    { urls: 'stun:stun2.l.google.com:19302' },
+                    { urls: 'stun:stun3.l.google.com:19302' },
+                    { urls: 'stun:stun.ekiga.net' },
+                    { urls: 'stun:stun.ideasip.com' }
+                ],
+                iceCandidatePoolSize: 5
+            }
+        };
+        const newPeer = new Peer(id, config);
+        let resolved = false;
+        const timeout = setTimeout(() => {
+            if (!resolved) {
+                resolved = true;
+                onReady(null, 'timeout');
+            }
+        }, 8000);
+        newPeer.on('open', (peerId) => {
+            if (!resolved) {
+                resolved = true;
+                clearTimeout(timeout);
+                onReady(newPeer, null);
+            }
+        });
+        newPeer.on('error', (err) => {
+            if (!resolved) {
+                resolved = true;
+                clearTimeout(timeout);
+                onReady(null, err);
+            }
+        });
+        return newPeer;
     }
 
-    function setupConnectionHandlers(conn, isHostMode) {
+    function setupConnectionHandlers(conn, hostMode) {
         conn.on('open', () => {
-            if (isHostMode) {
+            if (hostMode) {
                 isHost = true;
                 mySymbol = 'X';
                 gameActive = true;
@@ -465,14 +479,19 @@
                 board = ['', '', '', '', '', '', '', '', ''];
                 renderBoard();
                 clearChatHistory();
-                addSystemMessage('соединение по сети. вы X');
-                roomInfoSpan.innerHTML = 'игрок подключён. вы X';
+                addSystemMessage('соединение установлено. вы играете за X');
+                roomInfoSpan.innerHTML = 'соперник подключён. вы X';
                 const initPacket = { type: 'INIT', assigned: 'O', hostBoard: board, hostTurn: currentTurn, hostWinner: winner };
                 conn.send(JSON.stringify(initPacket));
-                setTimeout(() => sendFullSync(), 120);
+                setTimeout(() => sendFullSync(), 150);
             } else {
-                roomInfoSpan.innerHTML = 'ожидание данных от хоста...';
-                addSystemMessage('подключено, получаем символ...');
+                roomInfoSpan.innerHTML = 'подключено, получаем данные...';
+                addSystemMessage('подключение установлено, ожидание символа...');
+                setTimeout(() => {
+                    if (activeConn && activeConn.open && mySymbol === null) {
+                        activeConn.send(JSON.stringify({ type: 'REQ_SYNC' }));
+                    }
+                }, 500);
             }
         });
 
@@ -487,7 +506,7 @@
                     board = msg.hostBoard ? [...msg.hostBoard] : ['', '', '', '', '', '', '', '', ''];
                     renderBoard();
                     clearChatHistory();
-                    addSystemMessage(`вы играете за ${mySymbol}. ждите ход`);
+                    addSystemMessage(`вы играете за ${mySymbol}. ожидайте ход`);
                     roomInfoSpan.innerHTML = `вы ${mySymbol}, соперник X`;
                     sendFullSync();
                 }
@@ -537,7 +556,7 @@
             winner = null;
             renderBoard();
             roomInfoSpan.innerHTML = 'соединение разорвано';
-            addSystemMessage('соединение потеряно. создайте комнату заново.');
+            addSystemMessage('соединение потеряно. создайте комнату заново');
             clearChatHistory();
         });
 
@@ -549,10 +568,11 @@
     function createRoom() {
         destroyPeer();
         const roomId = 'ttt-' + Math.random().toString(36).substring(2, 12);
-        createPeerWithFallback(roomId, (newPeer) => {
-            if (!newPeer) {
-                roomInfoSpan.innerHTML = 'ошибка: не удалось создать комнату (проверьте интернет)';
-                addSystemMessage('не удалось создать соединение. попробуйте ещё раз.');
+        roomInfoSpan.innerHTML = 'создание комнаты...';
+        createPeerWithGoodConfig(roomId, (newPeer, err) => {
+            if (err || !newPeer) {
+                roomInfoSpan.innerHTML = 'ошибка: не удалось создать комнату. проверьте интернет';
+                addSystemMessage('ошибка подключения к серверу. попробуйте ещё раз');
                 return;
             }
             peer = newPeer;
@@ -565,7 +585,7 @@
             winner = null;
             renderBoard();
             clearChatHistory();
-            addSystemMessage(`комната создана. ожидание подключения...`);
+            addSystemMessage(`комната создана. отправьте id другу и ждите подключения`);
 
             peer.on('connection', (conn) => {
                 if (activeConn) { conn.close(); return; }
@@ -573,7 +593,7 @@
                 setupConnectionHandlers(activeConn, true);
             });
             peer.on('error', (err) => {
-                roomInfoSpan.innerHTML = 'ошибка peer, обновите страницу';
+                if (!activeConn) roomInfoSpan.innerHTML = 'ошибка, пересоздайте комнату';
             });
         });
     }
@@ -582,16 +602,18 @@
         if (!remoteId) { alert('введите id комнаты'); return; }
         destroyPeer();
         const guestId = 'guest-' + Math.random().toString(36).substring(2, 10);
-        createPeerWithFallback(guestId, (newPeer) => {
-            if (!newPeer) {
-                roomInfoSpan.innerHTML = 'ошибка подключения, повторите';
-                addSystemMessage('не удалось инициализировать соединение');
+        roomInfoSpan.innerHTML = 'подключение...';
+        createPeerWithGoodConfig(guestId, (newPeer, err) => {
+            if (err || !newPeer) {
+                roomInfoSpan.innerHTML = 'ошибка подключения. проверьте id и интернет';
+                addSystemMessage('не удалось подключиться. убедитесь, что комната существует');
                 return;
             }
             peer = newPeer;
             const conn = peer.connect(remoteId);
             if (!conn) {
-                alert('не удалось подключиться к комнате');
+                roomInfoSpan.innerHTML = 'не удалось соединиться с комнатой';
+                addSystemMessage('ошибка: возможно, комната недоступна');
                 return;
             }
             activeConn = conn;
@@ -600,17 +622,18 @@
             gameActive = false;
             setupConnectionHandlers(activeConn, false);
             roomInfoSpan.innerHTML = `подключение к ${remoteId}...`;
-            // запросим синхронизацию через секунду
+
             setTimeout(() => {
                 if (activeConn && activeConn.open && mySymbol === null) {
                     activeConn.send(JSON.stringify({ type: 'REQ_SYNC' }));
                 }
             }, 800);
+
             peer.on('error', () => {});
         });
     }
 
-    // ----- UI сборка -----
+    // ----- сборка UI -----
     function buildBoardUI() {
         boardDiv.innerHTML = '';
         for (let i = 0; i < 9; i++) {
@@ -645,7 +668,7 @@
 
     buildBoardUI();
     roomInfoSpan.innerHTML = 'нажмите "создать комнату"';
-    addSystemMessage('для игры: создайте комнату → скопируйте id → отправьте другу');
+    addSystemMessage('кросс-платформа: работает на ПК и телефонах');
 </script>
 </body>
 </html>
